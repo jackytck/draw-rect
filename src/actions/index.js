@@ -67,6 +67,22 @@ function setValue (value) {
   }
 }
 
+function mouseDown (point) {
+  console.log('mouse down...', point)
+  return {
+    type: 'MOUSE_DOWN',
+    point
+  }
+}
+
+function mouseUp (point) {
+  console.log('mouse up...', point)
+  return {
+    type: 'MOUSE_UP',
+    point
+  }
+}
+
 export default {
   selectTool,
   selectToolNone,
@@ -77,5 +93,7 @@ export default {
   fitToViewer,
   pan,
   fitSelection,
-  setValue
+  setValue,
+  mouseDown,
+  mouseUp
 }

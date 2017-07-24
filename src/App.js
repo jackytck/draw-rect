@@ -19,6 +19,8 @@ class App extends Component {
           onChangeValue={value => actions.setValue(value)}
           tool={viewerTool}
           onChangeTool={tool => actions.selectTool(tool)}
+          onMouseDown={event => actions.mouseDown(event.point)}
+          onMouseUp={event => actions.mouseUp(event.point)}
           style={{outline: '1px solid black'}}>
           {logo()}
         </ReactSVGPanZoom>
