@@ -15,7 +15,11 @@ import {
 
 const initialState = new Map({
   viewerValue: null,
-  viewerTool: TOOL_NONE
+  viewerTool: TOOL_NONE,
+  drawing: false,
+  mouseDown: null,
+  mousePos: null,
+  mouseUp: null
 })
 
 const root = (state, action) => {
@@ -53,6 +57,15 @@ const root = (state, action) => {
 
     case 'SET_VALUE':
       return state.set('viewerValue', fromJS(action.value))
+
+    case 'MOUSE_DOWN':
+      return state.set('drawing', true).set('mouseDown', fromJS(action.value))
+
+    case 'MOUSE_MOVE':
+      return state.set('mousePos', fromJS(action.value))
+
+    case 'MOUSE_UP':
+      return state.set('drawing', false).set('mouseUp', fromJS(action.value))
 
     default:
       return state

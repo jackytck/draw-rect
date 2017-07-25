@@ -11,6 +11,11 @@ class App extends Component {
     const { state, actions } = this.props
     const viewerValue = state.get('viewerValue') ? state.get('viewerValue').toJS() : null
     const viewerTool = state.get('viewerTool')
+    const drawing = state.get('drawing')
+    let onMouseMove = null
+    if (drawing) {
+      onMouseMove = event => actions.mouseMove(event.point)
+    }
 
     return (
       <ContainerDimensions>
@@ -20,6 +25,7 @@ class App extends Component {
           tool={viewerTool}
           onChangeTool={tool => actions.selectTool(tool)}
           onMouseDown={event => actions.mouseDown(event.point)}
+          onMouseMove={onMouseMove}
           onMouseUp={event => actions.mouseUp(event.point)}
           style={{outline: '1px solid black'}}>
           {logo()}

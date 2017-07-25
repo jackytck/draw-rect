@@ -67,19 +67,24 @@ function setValue (value) {
   }
 }
 
-function mouseDown (point) {
-  console.log('mouse down...', point)
+function mouseDown (value) {
   return {
     type: 'MOUSE_DOWN',
-    point
+    value
   }
 }
 
-function mouseUp (point) {
-  console.log('mouse up...', point)
+function mouseMove (value) {
+  return {
+    type: 'MOUSE_MOVE',
+    value
+  }
+}
+
+function mouseUp (value) {
   return {
     type: 'MOUSE_UP',
-    point
+    value
   }
 }
 
@@ -95,5 +100,6 @@ export default {
   fitSelection,
   setValue,
   mouseDown,
+  mouseMove,
   mouseUp
 }
