@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import ContainerDimensions from 'react-container-dimensions'
 import { ReactSVGPanZoom } from 'react-svg-pan-zoom'
 import actions from './actions'
-import logo from './logo'
+// import logo from './logo'
+import scene from './scene'
+import Guides from './guides'
 
 class App extends Component {
   render () {
@@ -19,20 +22,33 @@ class App extends Component {
 
     return (
       <ContainerDimensions>
-        <ReactSVGPanZoom
-          value={viewerValue}
-          onChangeValue={value => actions.setValue(value)}
-          tool={viewerTool}
-          onChangeTool={tool => actions.selectTool(tool)}
-          onMouseDown={event => actions.mouseDown(event.point)}
-          onMouseMove={onMouseMove}
-          onMouseUp={event => actions.mouseUp(event.point)}
-          style={{outline: '1px solid black'}}>
-          {logo()}
-        </ReactSVGPanZoom>
+        {({width, height}) =>
+          <ReactSVGPanZoom
+            width={width}
+            height={height}
+            value={viewerValue}
+            onChangeValue={value => actions.setValue(value)}
+            tool={viewerTool}
+            onChangeTool={tool => actions.selectTool(tool)}
+            onMouseDown={event => actions.mouseDown(event.point)}
+            onMouseMove={onMouseMove}
+            onMouseUp={event => actions.mouseUp(event.point)}
+            style={{outline: '1px solid black'}}>
+            <svg width={width} height={height}>
+              <g>
+                <Guides scene={scene} />
+              </g>
+            </svg>
+          </ReactSVGPanZoom>
+        }
       </ContainerDimensions>
     )
   }
+}
+
+App.propTypes = {
+  state: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
