@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux'
 import ContainerDimensions from 'react-container-dimensions'
 import { ReactSVGPanZoom } from 'react-svg-pan-zoom'
 import actions from './actions'
-// import logo from './logo'
 import scene from './scene'
 import Guides from './guides'
+import Rect from './rectangle'
 
 class App extends Component {
   render () {
@@ -19,6 +19,8 @@ class App extends Component {
     if (drawing) {
       onMouseMove = event => actions.mouseMove(event.point)
     }
+    const mouseDown = state.get('mouseDown')
+    const mousePos = state.get('mousePos')
 
     return (
       <ContainerDimensions>
@@ -37,6 +39,7 @@ class App extends Component {
             <svg width={width} height={height}>
               <g>
                 <Guides scene={scene} />
+                <Rect p={mouseDown} q={mousePos} stroke='black' fill='transparent' strokeWidth={5} />
               </g>
             </svg>
           </ReactSVGPanZoom>

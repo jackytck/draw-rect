@@ -59,7 +59,7 @@ const root = (state, action) => {
       return state.set('viewerValue', fromJS(action.value))
 
     case 'MOUSE_DOWN':
-      return state.set('drawing', true).set('mouseDown', fromJS(action.value))
+      return state.set('drawing', true).set('mouseDown', fromJS(action.value)).set('mousePos', null)
 
     case 'MOUSE_MOVE':
       return state.set('mousePos', fromJS(action.value))
