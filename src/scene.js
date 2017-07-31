@@ -32,9 +32,7 @@ const DefaultGuides = new Map({
 const Scene = Record({
   width: 3000,
   height: 2000,
-  guides: new Map()
+  guides: DefaultGuides
 }, 'Scene')
 
-export default Scene({
-  guides: DefaultGuides
-})
+export default Scene
