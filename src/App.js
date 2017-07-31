@@ -41,7 +41,7 @@ class App extends Component {
             <svg width={scene.width} height={scene.height}>
               <g>
                 <Guides scene={scene} />
-                <Rect p={mouseDown} q={mousePos} stroke='black' fill='transparent' strokeWidth={5} />
+                <Rect p={mouseDown} q={mousePos} stroke='black' fill='transparent' strokeWidth={5} snap={!drawing} />
               </g>
             </svg>
           </ReactSVGPanZoom>
