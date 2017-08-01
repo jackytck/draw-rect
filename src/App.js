@@ -18,11 +18,16 @@ class App extends Component {
     const viewerTool = state.get('viewerTool')
     const drawing = state.get('drawing')
     let onMouseMove = null
-    if (drawing) {
-      onMouseMove = event => actions.mouseMove(event.point)
-    }
+    let pendingRect = null
     const mouseDown = state.get('mouseDown')
     const mousePos = state.get('mousePos')
+    if (drawing) {
+      onMouseMove = event => actions.mouseMove(event.point)
+      pendingRect = <Rect p={mouseDown} q={mousePos} stroke='black' fill='transparent' strokeWidth={3} />
+    }
+    const allRects = state
+      .get('objects')
+      .map((v, k) => <Rect key={k} p={v.p} q={v.q} stroke='black' fill='transparent' strokeWidth={5} snap />)
 
     return (
       <ContainerDimensions>
@@ -41,7 +46,8 @@ class App extends Component {
             <svg width={scene.width} height={scene.height}>
               <g>
                 <Guides scene={scene} />
-                <Rect p={mouseDown} q={mousePos} stroke='black' fill='transparent' strokeWidth={5} snap={!drawing} />
+                {pendingRect}
+                {allRects}
               </g>
             </svg>
           </ReactSVGPanZoom>
