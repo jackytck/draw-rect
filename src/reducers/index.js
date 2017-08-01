@@ -1,5 +1,6 @@
 import {
   Map,
+  List,
   fromJS
 } from 'immutable'
 import {
@@ -16,6 +17,7 @@ import {
 const initialState = new Map({
   viewerValue: null,
   viewerTool: TOOL_NONE,
+  objects: new List(),
   drawing: false,
   mouseDown: null,
   mousePos: null,
@@ -65,7 +67,10 @@ const root = (state, action) => {
       return state.set('mousePos', fromJS(action.value))
 
     case 'MOUSE_UP':
-      return state.set('drawing', false).set('mouseUp', fromJS(action.value))
+      const p = state.get('mouseDown')
+      const q = state.get('mousePos')
+      const nextObjs = state.get('objects').push({ p, q })
+      return state.set('drawing', false).set('mousePos', fromJS(action.value)).set('objects', nextObjs)
 
     default:
       return state
