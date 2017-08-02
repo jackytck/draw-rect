@@ -38,6 +38,8 @@ class App extends Component {
             value={viewerValue}
             onChangeValue={value => actions.setValue(value)}
             tool={viewerTool}
+            detectAutoPan={false}
+            miniaturePosition={'none'}
             onChangeTool={tool => actions.selectTool(tool)}
             onMouseDown={event => actions.mouseDown(event.point)}
             onMouseMove={onMouseMove}
