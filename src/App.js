@@ -22,7 +22,7 @@ class App extends Component {
     const mouseDown = state.get('mouseDown')
     const mousePos = state.get('mousePos')
     if (drawing) {
-      onMouseMove = event => actions.mouseMove(event.point)
+      onMouseMove = event => actions.mouseMove(event)
       pendingRect = <Rect p={mouseDown} q={mousePos} stroke='black' fill='transparent' strokeWidth={3} />
     }
     const allRects = state
@@ -41,9 +41,9 @@ class App extends Component {
             detectAutoPan={false}
             miniaturePosition={'none'}
             onChangeTool={tool => actions.selectTool(tool)}
-            onMouseDown={event => actions.mouseDown(event.point)}
+            onMouseDown={event => actions.mouseDown(event)}
             onMouseMove={onMouseMove}
-            onMouseUp={event => actions.mouseUp(event.point)}
+            onMouseUp={event => actions.mouseUp(event)}
             style={{outline: '1px solid black'}}>
             <svg width={scene.width} height={scene.height}>
               <g>

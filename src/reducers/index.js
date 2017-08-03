@@ -61,16 +61,17 @@ const root = (state, action) => {
       return state.set('viewerValue', fromJS(action.value))
 
     case 'MOUSE_DOWN':
-      return state.set('drawing', true).set('mouseDown', fromJS(action.value)).set('mousePos', null)
+      console.log(action.value.originalEvent.target)
+      return state.set('drawing', true).set('mouseDown', fromJS(action.value.point)).set('mousePos', null)
 
     case 'MOUSE_MOVE':
-      return state.set('mousePos', fromJS(action.value))
+      return state.set('mousePos', fromJS(action.value.point))
 
     case 'MOUSE_UP':
       const p = state.get('mouseDown')
       const q = state.get('mousePos')
       const nextObjs = state.get('objects').push({ p, q })
-      return state.set('drawing', false).set('mousePos', fromJS(action.value)).set('objects', nextObjs)
+      return state.set('drawing', false).set('mousePos', fromJS(action.value.point)).set('objects', nextObjs)
 
     default:
       return state
