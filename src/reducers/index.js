@@ -17,12 +17,26 @@ import {
 const initialState = new Map({
   viewerValue: null,
   viewerTool: TOOL_NONE,
+  onClickObject: null,
   objects: new List(),
   drawing: false,
   mouseDown: null,
   mousePos: null,
   mouseUp: null
 })
+
+function extractElementData (node) {
+  while (!node.attributes.getNamedItem('data-element-root') && node.tagName !== 'svg') {
+    node = node.parentNode
+  }
+  if (node.tagName === 'svg') return null
+
+  return {
+    id: node.attributes.getNamedItem('data-id').value,
+    type: node.attributes.getNamedItem('data-type').value,
+    selected: node.attributes.getNamedItem('data-selected').value === 'true'
+  }
+}
 
 const root = (state, action) => {
   state = state || initialState
@@ -61,15 +75,25 @@ const root = (state, action) => {
       return state.set('viewerValue', fromJS(action.value))
 
     case 'MOUSE_DOWN':
-      console.log(action.value.originalEvent.target)
+      const node = action.value.originalEvent.target
+      const data = extractElementData(node)
+      if (data) {
+        console.log(data)
+        return state.set('onClickObject', fromJS(data))
+      }
       return state.set('drawing', true).set('mouseDown', fromJS(action.value.point)).set('mousePos', null)
 
     case 'MOUSE_MOVE':
       return state.set('mousePos', fromJS(action.value.point))
 
     case 'MOUSE_UP':
+      const drawing = state.get('drawing')
+      if (!drawing) {
+        return state
+      }
       const p = state.get('mouseDown')
       const q = state.get('mousePos')
+      // @todo: if area is small, skip adding
       const nextObjs = state.get('objects').push({ p, q })
       return state.set('drawing', false).set('mousePos', fromJS(action.value.point)).set('objects', nextObjs)
 
