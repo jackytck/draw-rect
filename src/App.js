@@ -27,7 +27,7 @@ class App extends Component {
     }
     const allRects = state
       .get('objects')
-      .map((v, k) => <Rect key={k} p={v.p} q={v.q} stroke='black' fill='transparent' strokeWidth={5} snap />)
+      .map((v, k) => <Rect key={k} id={`${k}`} p={v.p} q={v.q} stroke='black' fill='transparent' strokeWidth={5} snap />)
 
     return (
       <ContainerDimensions>

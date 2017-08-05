@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const round = (t, step) => Math.round(t / step) * step
 
-const Rect = ({ p, q, stroke, fill, strokeWidth, snap }) => {
+const Rect = ({ id, p, q, stroke, fill, strokeWidth, snap }) => {
   if (!p || !q) {
     return null
   }
@@ -28,11 +28,19 @@ const Rect = ({ p, q, stroke, fill, strokeWidth, snap }) => {
   const height = Math.abs(py - qy)
 
   return (
-    <rect x={x} y={y} width={width} height={height} stroke={stroke} fill={fill} strokeWidth={strokeWidth} />
+    <g
+      data-element-root
+      data-id={id}
+      data-type={'Rect'}
+      data-selected={false}
+    >
+      <rect x={x} y={y} width={width} height={height} stroke={stroke} fill={fill} strokeWidth={strokeWidth} />
+    </g>
   )
 }
 
 Rect.propTypes = {
+  id: PropTypes.string,
   p: PropTypes.object,
   q: PropTypes.object,
   stroke: PropTypes.string,
