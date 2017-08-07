@@ -17,7 +17,6 @@ import {
 const initialState = new Map({
   viewerValue: null,
   viewerTool: TOOL_NONE,
-  onClickObject: null,
   objects: new List(),
   drawing: false,
   mouseDown: null,
@@ -78,8 +77,12 @@ const root = (state, action) => {
       const node = action.value.originalEvent.target
       const data = extractElementData(node)
       if (data) {
-        console.log(data)
-        return state.set('onClickObject', fromJS(data))
+        const id = +data.id
+        const objList = state.get('objects')
+        let rect = objList.get(id)
+        rect.selected = !rect.selected
+        objList.set(id, rect)
+        return state.set('objects', objList)
       }
       return state.set('drawing', true).set('mouseDown', fromJS(action.value.point)).set('mousePos', null)
 
@@ -94,7 +97,11 @@ const root = (state, action) => {
       const p = state.get('mouseDown')
       const q = state.get('mousePos')
       // @todo: if area is small, skip adding
-      const nextObjs = state.get('objects').push({ p, q })
+      const nextObjs = state.get('objects').push({
+        p,
+        q,
+        selected: false
+      })
       return state.set('drawing', false).set('mousePos', fromJS(action.value.point)).set('objects', nextObjs)
 
     default:
