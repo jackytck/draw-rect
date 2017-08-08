@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const round = (t, step) => Math.round(t / step) * step
 
-const Rect = ({ id, p, q, stroke, fill, strokeWidth, snap }) => {
+const Rect = ({ id, p, q, stroke, fill, strokeWidth, selected, snap }) => {
   if (!p || !q) {
     return null
   }
@@ -27,6 +27,11 @@ const Rect = ({ id, p, q, stroke, fill, strokeWidth, snap }) => {
   const width = Math.abs(px - qx)
   const height = Math.abs(py - qy)
 
+  let rect = <rect x={x} y={y} width={width} height={height} stroke={stroke} fill={fill} strokeWidth={strokeWidth} />
+  if (selected) {
+    rect = <rect x={x} y={y} width={width} height={height} strokeDasharray='5,5' stroke={stroke} fill='pink' fillOpacity='0.6' strokeWidth={strokeWidth} />
+  }
+
   return (
     <g
       data-element-root
@@ -34,7 +39,7 @@ const Rect = ({ id, p, q, stroke, fill, strokeWidth, snap }) => {
       data-type={'Rect'}
       data-selected={false}
     >
-      <rect x={x} y={y} width={width} height={height} stroke={stroke} fill={fill} strokeWidth={strokeWidth} />
+      {rect}
     </g>
   )
 }
@@ -46,7 +51,8 @@ Rect.propTypes = {
   stroke: PropTypes.string,
   fill: PropTypes.string,
   strokeWidth: PropTypes.number,
-  snap: PropTypes.bool
+  snap: PropTypes.bool,
+  selected: PropTypes.bool
 }
 
 export default Rect
