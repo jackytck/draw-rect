@@ -27,7 +27,12 @@ class App extends Component {
     }
     const allRects = state
       .get('objects')
-      .map((v, k) => <Rect key={k} id={`${k}`} p={v.p} q={v.q} stroke='black' fill='transparent' strokeWidth={5} snap />)
+      .map((v, k) => <Rect key={k} id={`${k}`} p={v.p} q={v.q} stroke='black' fill='transparent' strokeWidth={5} selected={v.selected} snap />)
+
+    const onMouseUp = event => {
+      actions.mouseUp(event)
+      actions.setValue(viewerValue)
+    }
 
     return (
       <ContainerDimensions>
@@ -43,7 +48,7 @@ class App extends Component {
             onChangeTool={tool => actions.selectTool(tool)}
             onMouseDown={event => actions.mouseDown(event)}
             onMouseMove={onMouseMove}
-            onMouseUp={event => actions.mouseUp(event)}
+            onMouseUp={onMouseUp}
             style={{outline: '1px solid black'}}>
             <svg width={scene.width} height={scene.height}>
               <g>
