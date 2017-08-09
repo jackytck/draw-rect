@@ -37,6 +37,13 @@ function extractElementData (node) {
   }
 }
 
+function area (p, q) {
+  if (!p || !q) {
+    return 0
+  }
+  return Math.abs(p.get('x') - q.get('x')) * Math.abs(p.get('y') - q.get('y'))
+}
+
 const root = (state, action) => {
   state = state || initialState
 
@@ -96,7 +103,9 @@ const root = (state, action) => {
       }
       const p = state.get('mouseDown')
       const q = state.get('mousePos')
-      // @todo: if area is small, skip adding
+      if (area(p, q) < 400) {
+        return
+      }
       const nextObjs = state.get('objects').push({
         p,
         q,
