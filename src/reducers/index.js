@@ -104,7 +104,7 @@ const root = (state, action) => {
       const p = state.get('mouseDown')
       const q = state.get('mousePos')
       if (area(p, q) < 400) {
-        return
+        return state.set('drawing', false)
       }
       const nextObjs = state.get('objects').push({
         p,
