@@ -2,6 +2,7 @@
   "name": "draw-rect",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jackytck.github.io/draw-rect",
   "dependencies": {
     "immutable": "^3.8.1",
     "react": "^15.6.1",
@@ -14,6 +15,8 @@
     "redux-devtools-extension": "^2.13.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -26,6 +29,7 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.1.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "gh-pages": "^1.0.0"
   }
 }
